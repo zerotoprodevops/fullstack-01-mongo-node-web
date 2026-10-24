@@ -4,7 +4,7 @@ pipeline{
     }
 
     environment {
-        IMAGE = 'jyotimnab/fullstack-01-mongo-node-web'
+        IMAGE = 'jyotimanab/fullstack-01-mongo-node-web'
         TAG = "${env.BUILD_NUMBER}"
     }
     stages{
