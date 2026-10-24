@@ -26,7 +26,7 @@ pipeline{
         }
         stage('Pusg to Docker Hub'){
             steps{
-                withDockerRegistry( credentialsId: 'dockerhub-cred', url: ''){
+                withDockerRegistry(credentialsId: 'dockerhub-cred', url: ''){
                     sh """
                         docker push ${IMAGE}:${TAG}
                         docker tag ${IMAGE}:${TAG} ${IMAGE}:latest
