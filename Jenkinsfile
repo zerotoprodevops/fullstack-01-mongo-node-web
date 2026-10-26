@@ -24,7 +24,7 @@ pipeline{
                 sh "TMPDIR=/tempdir trivy image ${IMAGE}:${TAG}"
             }
         }
-        stage('Pusg to Docker Hub'){
+        stage('Push to Docker Hub'){
             steps{
                 withDockerRegistry(credentialsId: 'dockerhub-cred', url: ''){
                     sh """
@@ -32,6 +32,28 @@ pipeline{
                         docker tag ${IMAGE}:${TAG} ${IMAGE}:latest
                         docker push ${IMAGE}:latest
                        """
+                }
+            }
+        }
+        stage('Update Gitops Manifest'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'github-token', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')])   {
+                    sh """
+                    #1. clone the config repo
+                    rm -rf fullstack-01-gitops-configs
+                    git clone https://${GIT_USER}:${GIT_PASS}@github.com/zerotoprodevops/fullstack-01-gitops-configs.git
+                    cd fullstack-01-gitops-configs
+                    
+                    #2.Update the IMAGE TAG in the web values.yaml
+                    sed -i "s|  tag: .*|  tag: \\"${TAG}\\"|g" web-chart/values.yaml
+                    
+                    #3. Commit and push
+                    git config user.email "jenkins@k8cluster.local"
+                    git config user.name "Jenkins CI"
+                    git add .
+                    git commit -m "Update Web image tag to ${TAG} [skip ci]"
+                    git push origin main
+                    """
                 }
             }
         }
