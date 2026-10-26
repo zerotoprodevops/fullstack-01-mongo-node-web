@@ -2,6 +2,10 @@ pipeline{
     agent{
         label  "build-vm"
     }
+    triggers{
+        pollSCM('H/5 * * * *')
+    }
+
 
     environment {
         IMAGE = 'jyotimanab/fullstack-01-mongo-node-web'
