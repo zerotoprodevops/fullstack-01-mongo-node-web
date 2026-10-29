@@ -30,7 +30,7 @@ const server = http.createServer((req, res) => {
   }
 
   // 2. Show the Webpage and Fetch Data (GET)
-  http.get('http://api-service:3000/items', (apiRes) => {
+  http.get('http://api-service-active:3000/items', (apiRes) => {
     let data = '';
     apiRes.on('data', chunk => data += chunk);
     apiRes.on('end', () => {
