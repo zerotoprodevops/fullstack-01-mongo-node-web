@@ -11,7 +11,7 @@ const server = http.createServer((req, res) => {
 
       // Send data to the Backend API (api-service)
       const options = {
-        hostname: 'api-service', 
+        hostname: 'api-service-active', 
         port: 3000,
         path: '/items',
         method: 'POST',
