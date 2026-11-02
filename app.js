@@ -48,7 +48,7 @@ const server = http.createServer((req, res) => {
       res.end(`
         <html>
           <body style="text-align:center; font-family:sans-serif; margin-top:50px;">
-            <h1>My Fullstack Data App</h1>
+            <h1>My Fullstack Data App with Rollout</h1>
             <form method="POST" action="/submit">
               <input type="text" name="itemName" placeholder="Enter a new item" required />
               <button type="submit">Save to Database</button>
